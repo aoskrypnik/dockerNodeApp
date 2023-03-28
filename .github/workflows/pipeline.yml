@@ -31,7 +31,7 @@ jobs:
       
       - name: Set tag
         if: steps.lint.outcome == 'success'
-        run: echo "TAG=$(date +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
+        run: echo "TAG=$(date +"%Y-%m-%d%H:%M:%S")" >> $GITHUB_ENV
   
       - name: Build Docker Image
         uses: docker/build-push-action@v2
