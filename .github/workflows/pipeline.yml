@@ -6,13 +6,37 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  NODE_VERSION: 16
+
 jobs:
 
-  build:
-
+  build-and-push:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag node-web-app:$(date +%s)
+      - name: Install NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Code Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Code Linting
+        id: lint
+        run: npm run lint
+  
+      - name: Build Docker Image
+        if: steps.lint.outcome == 'success'
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ env.DOCKER_USERNAME }}/node-web-app:$(date +%s)
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
