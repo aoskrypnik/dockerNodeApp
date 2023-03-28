@@ -45,7 +45,9 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/node-web-app:${{ env.TAG }}
+          tags: |
+            {{ secrets.DOCKER_USERNAME }}/node-web-app:latest
+            {{ secrets.DOCKER_USERNAME }}/node-web-app:${{ env.TAG }}
           
           
   check_image:
@@ -55,8 +57,8 @@ jobs:
     steps:
       - name: Run Docker Container
         run: |
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/node-web-app:${{ env.TAG }}
-          docker run -d -p 80:80 --name node-web-app ${{ secrets.DOCKERHUB_USERNAME }}/node-web-app:${{ env.TAG }}
+          docker pull ${{ secrets.DOCKER_USERNAME }}/node-web-app:latest
+          docker run -d -p 80:80 --name node-web-app ${{ secrets.DOCKER_USERNAME }}/node-web-app:latest
       - name: Check Image
         run: |
           sleep 5
