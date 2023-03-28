@@ -10,6 +10,7 @@
     "lint": "npm run lint:js"
   },
   "dependencies": {
-    "express": "^4.16.1"
+    "express": "^4.16.1",
+    "eslint": "^8.36.0"
   }
 }
