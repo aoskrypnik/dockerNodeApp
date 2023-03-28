@@ -1,22 +1,12 @@
-# Set the parser to use
-parser: eslint
+# .eslintrc.yml
 
-# Set the environment to use
 env:
-  node: true
-  es6: true
+  es2021: true
+  browser: true
 
-# Set the extends configuration
 extends:
   - eslint:recommended
 
-# Set the rules to use
-rules:
-  # Use double quotes for strings
-  quotes: ["error", "double"]
-
-  # Require semicolons at the end of statements
-  semi: ["error", "always"]
-
-  # Allow console statements in non-production environments
-  no-console: ["error", { allow: ["warn", "error"] }]
+parserOptions:
+  ecmaVersion: 2021
+  sourceType: module
