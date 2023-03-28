@@ -1,12 +1,29 @@
-# .eslintrc.yml
- 
+# Set the parser to use
+parser: babel-eslint
+
+# Set the environment to use
 env:
-es2021: true
-browser: true
- 
+  node: true
+  es6: true
+
+# Set the extends configuration
 extends:
   - eslint:recommended
- 
-parserOptions:
- ecmaVersion: 2021
-sourceType: module
+  - plugin:node/recommended
+  - plugin:prettier/recommended
+
+# Set the plugins to use
+plugins:
+  - node
+  - prettier
+
+# Set the rules to use
+rules:
+  # Use double quotes for strings
+  quotes: ["error", "double"]
+
+  # Require semicolons at the end of statements
+  semi: ["error", "always"]
+
+  # Allow console statements in non-production environments
+  no-console: ["error", { allow: ["warn", "error"] }]
