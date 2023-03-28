@@ -29,18 +29,17 @@ jobs:
         id: lint
         run: npm run lint
       
-      - name: Set Tag
-        id: setTag
-        run: echo ::set-output name=tag::$(date +'%Y-%m-%d')
+      - name: Set tag
+        if: steps.lint.outcome == 'success'
+        run: echo "export TAG=$(date +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
   
       - name: Build Docker Image
-        if: steps.lint.outcome == 'success'
         uses: docker/build-push-action@v2
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ env.DOCKER_USERNAME }}/node-web-app:${{ steps.setTag.outputs.tag }}
+          tags: ${{ env.DOCKER_USERNAME }}/node-web-app:${{ env.TAG }}
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
