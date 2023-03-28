@@ -36,8 +36,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ env.DOCKER_USERNAME }}/node-web-app:$IMAGE_TAG
+          tags: ${{ env.DOCKER_USERNAME }}/node-web-app:$(date +%Y-%m-%d)
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          IMAGE_TAG: ${{ date +%Y-%m-%d }}
