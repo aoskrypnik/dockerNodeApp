@@ -28,6 +28,9 @@ jobs:
       - name: Code Linting
         id: lint
         run: npm run lint
+        
+      - name: Set date variable
+        run: echo ::set-env name=IMAGE_TAG::$(date +'%Y-%m-%d')
   
       - name: Build Docker Image
         if: steps.lint.outcome == 'success'
@@ -36,7 +39,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ env.DOCKER_USERNAME }}/node-web-app:$(date +%Y-%m-%d)
+          tags: ${{ env.DOCKER_USERNAME }}/node-web-app:${{ env.IMAGE_TAG }}
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
