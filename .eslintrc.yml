@@ -1,5 +1,5 @@
 # Set the parser to use
-parser: babel-eslint
+parser: eslint
 
 # Set the environment to use
 env:
