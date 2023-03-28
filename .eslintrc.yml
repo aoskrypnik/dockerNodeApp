@@ -9,13 +9,6 @@ env:
 # Set the extends configuration
 extends:
   - eslint:recommended
-  - plugin:node/recommended
-  - plugin:prettier/recommended
-
-# Set the plugins to use
-plugins:
-  - node
-  - prettier
 
 # Set the rules to use
 rules:
