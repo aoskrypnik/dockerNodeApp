@@ -28,11 +28,11 @@ jobs:
       - name: Code Linting
         id: lint
         run: npm run lint
-      
+
       - name: Set Tag
         if: steps.lint.outcome == 'success'
         run: echo "TAG=$(date +"%Y-%m-%d-%H-%M-%S")" >> $GITHUB_ENV
-  
+
       - name: Login To Dockerhub
         uses: docker/login-action@v2
         with:
@@ -47,11 +47,11 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/node-web-app:${{ env.TAG }}
-      
+
       - name: Check Image
         if: steps.pub.outcome == 'success'
         run: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/node-web-app:${{ env.TAG }}
-          docker run -d -p 80:80 --name node-web-app ${{ secrets.DOCKER_USERNAME }}/node-web-app:${{ env.TAG }}
+          docker run -d -p 3000:3000 --name node-web-app ${{ secrets.DOCKER_USERNAME }}/node-web-app:${{ env.TAG }}
           sleep 5
-          curl -I http://localhost:80/ | grep "200 OK"
+          curl -I http://localhost:3000/ | grep "200 OK"
