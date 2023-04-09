@@ -17,8 +17,11 @@ spec:
           image: nginx:latest
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d
         - name: nodejs
-          image: aoskrypnik/node-web-app:2023-03-28-20-57-31
+          image: aoskrypnik/node-web-app:2023-04-09-12-52-36
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
@@ -28,3 +31,7 @@ spec:
               port: 3000
             initialDelaySeconds: 30
             periodSeconds: 10
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: nginx-config
